@@ -59,7 +59,10 @@ const Card3D: React.FC<Card3DProps> = ({ project }) => {
         </div>
 
         {/* Back of Card */}
-        <div className="absolute w-full h-full backface-hidden" style={{ transform: 'rotateY(180deg)', ...cardStyle }}>
+        <div className="absolute w-full h-full backface-hidden" style={{
+          transition: cardStyle.transition,
+          transform: `rotateY(180deg) ${cardStyle.transform}`
+        }}>
           <div className="w-full h-full bg-white dark:bg-dark-bg rounded-2xl shadow-2xl overflow-hidden p-6 flex flex-col border border-white/10">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow">{project.longDescription}</p>
