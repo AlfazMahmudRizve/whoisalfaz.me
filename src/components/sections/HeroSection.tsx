@@ -17,7 +17,8 @@ const FloatingShape = ({ position, color }: { position: [number, number, number]
 
   return (
     <Icosahedron ref={ref} args={[1, 0]} position={position}>
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} roughness={0.2} metalness={0.8} wireframe={true}></meshStandardMaterial>
+      {/* FIX: Converted to a self-closing tag to resolve JSX type errors. */}
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} roughness={0.2} metalness={0.8} wireframe={true} />
     </Icosahedron>
   );
 };
@@ -33,10 +34,11 @@ const Scene = () => {
 
     return(
         <>
-            <ambientLight intensity={0.2}></ambientLight>
-            <directionalLight position={[5, 5, 5]} intensity={1}></directionalLight>
-            <pointLight position={[-10, -10, -10]} color="#9b5de5" intensity={2}></pointLight>
-            <pointLight position={[10, 10, 10]} color="#00f5d4" intensity={2}></pointLight>
+            {/* FIX: Converted to self-closing tags to resolve JSX type errors. */}
+            <ambientLight intensity={0.2} />
+            <directionalLight position={[5, 5, 5]} intensity={1} />
+            <pointLight position={[-10, -10, -10]} color="#9b5de5" intensity={2} />
+            <pointLight position={[10, 10, 10]} color="#00f5d4" intensity={2} />
             {shapes.map((shape, i) => <FloatingShape key={i} {...shape} />)}
         </>
     )
