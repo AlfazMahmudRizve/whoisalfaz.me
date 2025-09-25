@@ -22,6 +22,44 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
+  // SEO Defaults - these should match index.html for consistency and for when returning to the main page.
+  const defaultTitle = "whoisalfaz.me | Alfaz Mahmud Rizve's Portfolio";
+  const defaultDescription = "A personal portfolio website for Alfaz, showcasing AI agents, businesses, and ideas brought to reality.";
+  const defaultOgImage = "https://iili.io/Kc953In.jpg";
+
+  const updateMetaTags = useCallback((title: string, description: string, imageUrl: string) => {
+    document.title = title;
+    const selectors = {
+      'meta[name="description"]': description,
+      'meta[property="og:title"]': title,
+      'meta[property="twitter:title"]': title,
+      'meta[property="og:description"]': description,
+      'meta[property="twitter:description"]': description,
+      'meta[property="og:image"]': imageUrl,
+      'meta[property="twitter:image"]': imageUrl,
+    };
+
+    for (const [selector, content] of Object.entries(selectors)) {
+      const element = document.querySelector(selector) as HTMLMetaElement | null;
+      if (element) {
+        element.content = content;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedPost) {
+      updateMetaTags(
+        `${selectedPost.title} | whoisalfaz.me`,
+        selectedPost.seoDescription,
+        selectedPost.coverImage
+      );
+    } else {
+      updateMetaTags(defaultTitle, defaultDescription, defaultOgImage);
+    }
+  }, [selectedPost, updateMetaTags, defaultTitle, defaultDescription, defaultOgImage]);
+
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
